@@ -3,13 +3,13 @@ import React, { Component } from 'react'
 import {AudioContext} from '../context/AudioProvider'
 import { RecyclerListView, LayoutProvider} from 'recyclerlistview';
 import { Dimensions } from 'react-native';
-
+import AudioListItem from '../components/AudioListItem';
 
 export class AudioList extends Component { 
   static contextType = AudioContext
 
   layoutProvider = new LayoutProvider(i => 'audio',(type, dim) =>{
-    switch (key) {
+    switch (type) {
         case 'audio':
             dim.width = Dimensions.get('window').width;
             dim.height = 70;
@@ -24,8 +24,8 @@ export class AudioList extends Component {
   })
 
   rowRenderer = (type, item) =>{
-    console.log(item);
-    return <Text>{item.filename}</Text>
+  
+    return <AudioListItem title={item.filename} duration={item.duration}/>
   }
 
   render() {

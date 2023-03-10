@@ -1,6 +1,7 @@
 import {NavigationContainer} from '@react-navigation/native';
 import AppNavigator from './app/navigation/AppNavigation';
 import AudioProvider from './app/context/AudioProvider';
+
 export default function App() {
   return (
   <AudioProvider>
