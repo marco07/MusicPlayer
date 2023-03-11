@@ -1,6 +1,6 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, TouchableWithoutFeedback } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 import color from '../misc/color'
 
@@ -24,15 +24,22 @@ const convertTime = minutes => {
     return `${minute}:${sec}`;
 }
 
+const renderPlayPauseIcon = isPlaying => {
+    if(isPlaying) return <Entypo name="controller-paus" size={24} color={color.ACTIVE_FONT} />
+    return <Entypo name="controller-play" size={24} color={color.ACTIVE_FONT} />
+}
+
 // create a component
-const AudioListItem = ({title, duration}) => {
+const AudioListItem = ({title, duration,onOptionPress,onAudioPress, isPlaying, activeListItem}) => {
     return (
         <>
         <View style={styles.container}>
+            <TouchableWithoutFeedback onPress={onAudioPress}>         
             <View style={styles.leftContainer}>
-                <View style={styles.thumbnail}>
+                <View style={[styles.thumbnail, {backgroundColor: activeListItem ? color.ACTIVE_BG: color.FONT_LIGHT}]}>
                     <Text style={styles.thumbnailText}>
-                        {getThumbnailText(title)}
+                        {activeListItem ? renderPlayPauseIcon(isPlaying):getThumbnailText(title)}
+                       
                     </Text>
                 </View>
                 <View style={styles.titleContainer}>
@@ -44,9 +51,13 @@ const AudioListItem = ({title, duration}) => {
                     </Text>
                 </View>
             </View>
+            </TouchableWithoutFeedback>
             <View style={styles.rightContainer}>
-                <Entypo name="dots-three-vertical" 
-                size={24} color={color.FONT_MEDIUM} />
+                <Entypo onPress={onOptionPress}
+                    name="dots-three-vertical" 
+                    size={24} color={color.FONT_MEDIUM}
+                    style={{padding:10}} 
+                />
             </View>
         </View>
         <View style={styles.separator} />
@@ -73,6 +84,7 @@ const styles = StyleSheet.create({
         height: 50,
         alignItems: 'center',
         justifyContent:'center',
+
     },
     thumbnail:{
         height: 50,
@@ -81,6 +93,7 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         alignItems:'center',
         borderRadius: 25,
+        marginRight:10,
     },
     thumbnailText:{
         fontSize: 22,
@@ -89,7 +102,7 @@ const styles = StyleSheet.create({
     },
     titleContainer:{
         width: width - 180,
-        paddingLeft:5,
+        paddingLeft:10,
     },
     title:{
         fontSize:16,

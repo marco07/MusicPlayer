@@ -11,7 +11,7 @@ const Tab = createBottomTabNavigator();
 // create a component
 const AppNavigator = () => {
     return <Tab.Navigator>
-        <Tab.Screen  name='AudioList' component={AudioList} options={{
+        <Tab.Screen  name='Audio List' component={AudioList} options={{
             tabBarIcon:({color, size}) =>{
                 return <Ionicons name="headset" size={size} color={color} />
             }
