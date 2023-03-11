@@ -1,0 +1,4 @@
+expo start
+expo login
+expo publish
+eas build -p android --profile preview 

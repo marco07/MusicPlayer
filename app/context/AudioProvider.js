@@ -5,6 +5,7 @@ import {DataProvider} from 'recyclerlistview'
 
 
 export const AudioContext = createContext();
+
 export class AudioProvider extends Component {
  
       
@@ -20,7 +21,10 @@ export class AudioProvider extends Component {
             currentAudio:{},
             isPlaying: false,
             currentAudioIndex: null,
-        }
+            playbackPosition: null,
+            playbackDuration: null,
+        };
+        this.totalAudioCount = 0;
     }
 
     permissionAlert = () =>{
@@ -49,6 +53,8 @@ export class AudioProvider extends Component {
 
             }
         );
+
+        this.totalAudioCount = media.totalCount;
 
         this.setState({
             ...this.state, 
@@ -111,7 +117,8 @@ export class AudioProvider extends Component {
 
     
   render() {
-    const {audiofiles, dataProvider, permissionError, playbackObj, soundObj, currentAudio, isPlaying, currentAudioIndex} = this.state
+    const {audiofiles, dataProvider, permissionError, playbackObj, soundObj, currentAudio, 
+        isPlaying, currentAudioIndex, playbackPosition, playbackDuration} = this.state
     if (permissionError) return<View style={{
         
             flex: 1,
@@ -123,7 +130,8 @@ export class AudioProvider extends Component {
         <Text style={{fontSize: 25, textAlign:'center', color:'red'}}>It looks like you haven't accept the permission</Text>
     </View>
     return <AudioContext.Provider value={{audiofiles, dataProvider, 
-    playbackObj, soundObj, currentAudio, isPlaying,currentAudioIndex,  updateState: this.updateState}}>
+    playbackObj, soundObj, currentAudio, isPlaying,currentAudioIndex,  
+    totalAudioCount: this.totalAudioCount,playbackPosition, playbackDuration, updateState: this.updateState, }}>
         {this.props.children}
     </AudioContext.Provider>
   }
