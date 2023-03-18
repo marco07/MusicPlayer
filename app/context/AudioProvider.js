@@ -1,8 +1,9 @@
 import { Text, View, Alert } from 'react-native'
 import React, { Component, createContext } from 'react'
 import * as MediaLibrary  from 'expo-media-library';
-import {DataProvider} from 'recyclerlistview'
-
+import {DataProvider} from 'recyclerlistview';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Audio } from 'expo-av';
 
 export const AudioContext = createContext();
 
@@ -62,9 +63,28 @@ export class AudioProvider extends Component {
                 ...audiofiles, 
                 ...media.assets]), 
 
-            audiofiles: [...audiofiles, ...media.assets]}),
+            audiofiles: [...audiofiles, ...media.assets]});
 
         console.log(media.assets.length);
+    }
+
+    loadPreviusAudio = async () => {
+        //TODO  : we need to load audio from our async storage
+        let previousAudio = await AsyncStorage.getItem('previousAudio');
+        let currentAudio;
+        let currentAudioIndex;
+
+        if (previousAudio === null) {
+            currentAudio = this.state.audiofiles[0];
+            currentAudioIndex = 0;
+            
+        }else{
+            previousAudio = JSON.parse(previousAudio);
+            currentAudio = previousAudio.audio;
+            currentAudioIndex = previousAudio.index;
+        }
+        this.setState({...this.state, currentAudio, currentAudioIndex});
+
     }
 
     getPermission = async () =>{
@@ -107,8 +127,50 @@ export class AudioProvider extends Component {
         }
     }
 
+    onPlaybackStatusUpdate = async playbackStatus => {
+        if (playbackStatus.isLoaded && playbackStatus.isPlaying) {
+          this.updateState(this, {
+            playbackPosition: playbackStatus.positionMillis,
+            playbackDuration: playbackStatus.durationMillis,
+    
+          });    
+        }
+        if (playbackStatus.didJustFinish) {
+          const nextAudioIndex = this.state.currentAudioIndex + 1;
+          
+          // there is no next audio to play or current audio is the last
+    
+        if (nextAudioIndex >= this.totalAudioCount) {
+           this.state.playbackObj.unloadAsync();
+           this.updateState(this, {
+            soundObj: null,
+            currentAudio: this.state.audiofiles[0],
+            isPlaying: false,
+            currentAudioIndex: 0,
+            playbackPosition: null,
+            playbackDuration: null,
+          });
+          return await storeAudioForNextOpening(this.state.audiofiles[0], 0);
+        }
+    
+          // otherwise we want to select next audio
+          const audio = this.state.audiofiles[nextAudioIndex];
+          const status =  await playNext(this.state.playbackObj, audio.uri);
+          this.updateState(this, {
+            soundObj: status,
+            currentAudio: audio,
+            isPlaying: true,
+            currentAudioIndex: nextAudioIndex,
+          });
+          await storeAudioForNextOpening(audio, nextAudioIndex);
+        }
+      }
+
     componentDidMount(){
-        this.getPermission()
+        this.getPermission();
+        if (this.state.playbackObj === null) {
+            this.setState({...this.state, playbackObj: new Audio.Sound()})
+        }
     }
 
     updateState = (prevState, newState = {}) => {
@@ -131,8 +193,12 @@ export class AudioProvider extends Component {
     </View>
     return <AudioContext.Provider value={{audiofiles, dataProvider, 
     playbackObj, soundObj, currentAudio, isPlaying,currentAudioIndex,  
-    totalAudioCount: this.totalAudioCount,playbackPosition, playbackDuration, updateState: this.updateState, }}>
-        {this.props.children}
+    totalAudioCount: this.totalAudioCount,playbackPosition, playbackDuration, 
+    updateState: this.updateState,
+    loadPreviusAudio: this.loadPreviusAudio,
+    onPlaybackStatusUpdate: this.onPlaybackStatusUpdate }}>
+    
+    {this.props.children}
     </AudioContext.Provider>
   }
 }
