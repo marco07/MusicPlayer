@@ -1,6 +1,6 @@
 import { Text, View, StyleSheet, ScrollView } from 'react-native'
 import React, { Component } from 'react'
-import {AudioContext} from '../context/AudioProvider'
+import {AudioContext} from '../context/AudioProvider';
 import { RecyclerListView, LayoutProvider} from 'recyclerlistview';
 import { Dimensions } from 'react-native';
 import AudioListItem from '../components/AudioListItem';
@@ -11,6 +11,7 @@ import {pause, play, playNext, resume} from '../misc/audioController';
 import { storeAudioForNextOpening } from '../misc/helper';
 
 
+
 export class AudioList extends Component { 
   static contextType = AudioContext
 
@@ -19,7 +20,7 @@ export class AudioList extends Component {
     this.state = {
       OptionModalVisible: false,
     };
-    this.currentItem ={}
+    this.currentItem ={};
   }
 
   layoutProvider = new LayoutProvider(i => 'audio',(type, dim) =>{
@@ -148,7 +149,14 @@ export class AudioList extends Component {
                 />
                 <OptionModal
                   onPlayPress={() => console.log('Playing audio')}
-                  onPlayListPress={() => console.log('Add PlayList audio')}  
+                  onPlayListPress={() =>{
+                    this.context.updateState(this.context,{
+                      addToPlayList: this.currentItem,
+                    });
+
+                    this.props.navigation.navigate('PlayList');
+
+                  }} 
                   onClose={() => this.setState({...this.state, OptionModalVisible:false}) } 
                   visible={this.state.OptionModalVisible}
                   currentItem={this.currentItem}

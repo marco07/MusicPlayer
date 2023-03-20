@@ -4,6 +4,8 @@ import * as MediaLibrary  from 'expo-media-library';
 import {DataProvider} from 'recyclerlistview';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Audio } from 'expo-av';
+import { storeAudioForNextOpening } from '../misc/helper';
+import { playNext } from '../misc/audioController';
 
 export const AudioContext = createContext();
 
@@ -15,6 +17,8 @@ export class AudioProvider extends Component {
 
         this.state ={
             audiofiles:[],
+            playList:[],
+            addToPlayList: null,
             permissionError: false,
             dataProvider: new DataProvider((r1, r2) => r1 !== r2),
             playbackObj: null,
@@ -179,7 +183,7 @@ export class AudioProvider extends Component {
 
     
   render() {
-    const {audiofiles, dataProvider, permissionError, playbackObj, soundObj, currentAudio, 
+    const {audiofiles, playList, addToPlayList, dataProvider, permissionError, playbackObj, soundObj, currentAudio, 
         isPlaying, currentAudioIndex, playbackPosition, playbackDuration} = this.state
     if (permissionError) return<View style={{
         
@@ -191,7 +195,7 @@ export class AudioProvider extends Component {
     }}>
         <Text style={{fontSize: 25, textAlign:'center', color:'red'}}>It looks like you haven't accept the permission</Text>
     </View>
-    return <AudioContext.Provider value={{audiofiles, dataProvider, 
+    return <AudioContext.Provider value={{audiofiles, playList, addToPlayList, dataProvider, 
     playbackObj, soundObj, currentAudio, isPlaying,currentAudioIndex,  
     totalAudioCount: this.totalAudioCount,playbackPosition, playbackDuration, 
     updateState: this.updateState,

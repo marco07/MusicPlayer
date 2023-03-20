@@ -8,7 +8,7 @@ const OptionModal = ({visible, currentItem,onClose, onPlayPress, onPlayListPress
     const {filename} = currentItem
     return <>
     <StatusBar hidden />
-    <Modal animationType='slide' transparent visible={visible}>
+    <Modal animationType='fade' transparent visible={visible}>
         <View style={styles.modal}>
         <Text style={styles.title} numberOfLines={2}>
             {filename}
