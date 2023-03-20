@@ -10,8 +10,7 @@ import { playNext } from '../misc/audioController';
 export const AudioContext = createContext();
 
 export class AudioProvider extends Component {
- 
-      
+       
     constructor(props){
         super(props);
 

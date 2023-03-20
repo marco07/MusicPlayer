@@ -8,6 +8,7 @@ import color from '../misc/color';
 // create a component
 const PlayListInputModal = ({ visible, onClose, onSubmit}) => {
   const [playListName, setPlayListName] = useState('');
+
   const handleOnSubmit = () => {
     if (!playListName.trim()) {
       onClose();
@@ -17,6 +18,7 @@ const PlayListInputModal = ({ visible, onClose, onSubmit}) => {
       onClose();
     }
   }
+  
     return (
        <Modal visible={visible} animationType='fade' transparent>
        
