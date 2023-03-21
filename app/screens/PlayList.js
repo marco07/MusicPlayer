@@ -2,13 +2,17 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, FlatList, Alert } from 'react-native';
+import PlayListDetail from '../components/PlayListDetail';
 import PlayListInputModal from '../components/PlayListInputModal';
 import { AudioContext } from '../context/AudioProvider';
 import color from '../misc/color';
 
+let selectPlayList ={};
 // create a component
 const PlayerList = () => {
     const [modalVisible, setModalVisible] = useState(false);
+    const [showPlayList, setshowPlayList] = useState(false);
+
     const context = useContext(AudioContext);
 
     const { playList, addToPlayList, updateState} = context;
@@ -101,11 +105,13 @@ const renderPlayList = async () => {
     }
 
         // if there is no audio selected then we want open the list
-        console.log('opening list');
+        selectPlayList = playList;
+        setshowPlayList(true);
 
 
     }
     return (
+        <>
         <ScrollView contentContainerStyle={styles.container}>
         
 
@@ -128,6 +134,9 @@ const renderPlayList = async () => {
             onSubmit={createPlayList}
             />
         </ScrollView>
+        <PlayListDetail visible={showPlayList} playList={selectPlayList}
+        onClose={()=>setshowPlayList(false)} />
+        </>
     );
 };
 
