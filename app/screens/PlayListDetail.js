@@ -1,17 +1,20 @@
-import React from "react";
+import React, {useContext} from "react";
 import { View, StyleSheet, Modal, Text, FlatList, Dimensions, TouchableWithoutFeedback } from "react-native";
 import AudioListItem from '../components/AudioListItem';
 import { selectAudio } from '../misc/audioController';
+import { AudioContext } from '../context/AudioProvider';
 import color from '../misc/color';
 
-const PlayListDetail = ({visible, playList, onClose }) => {
-    const playAudio = (audio) =>{
-        selectAudio(audio,);
+
+const PlayListDetail = props => {
+    const context = useContext(AudioContext);
+    const playList = props.route.params;
+    const playAudio = async audio =>{
+       await selectAudio(audio, context,{activePlayList: playList, isPlayingRunning: true});
     }
     return (
-        <Modal visible={visible} animationType='slide' transparent
-        onRequestClose={onClose}>
-            
+   
+            <>
             <View style={styles.container}>
                 <Text style={styles.title}>{playList.title}</Text>
                 <FlatList
@@ -19,34 +22,26 @@ const PlayListDetail = ({visible, playList, onClose }) => {
                 data={playList.audios} keyExtractor={item => item.id.toString()}
                 renderItem={({item}) =>(
                     <View style={{marginBottom: 10}}>
-                      <AudioListItem title={item.filename} duration={item.duration} onAudioPress = {() => playAudio(item)} />
+                      
+                      <AudioListItem title={item.filename} 
+                      duration={item.duration}
+                      isPlaying={context.isPlaying}
+                      activeListItem = {item.id === context.currentAudio.id} 
+                      onAudioPress = {() => playAudio(item)} />
                     </View>
                 )}/>
             </View>
-            <TouchableWithoutFeedback onPress={onClose}>
-                <View style={[StyleSheet.absoluteFillObject, styles.modalBG]} />
-            </TouchableWithoutFeedback>
-        </Modal>
+            </>
+ 
     );
 };
 
-const { width, height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     container:{
-        position: 'absolute',
-        bottom:0,
         alignSelf: 'center',
-        height: height  - 150,
-        width: width - 15,
-        backgroundColor: color.ACTIVE_FONT,
-        borderTopEndRadius: 25,
-        borderTopLeftRadius: 25,
     },
-    modalBG: {
-        backgroundColor: color.MODAL_BG,
-        zIndex: -1,
-    },
+
     listContainer:{
         padding: 20,
     },

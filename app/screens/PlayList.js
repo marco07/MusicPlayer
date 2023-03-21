@@ -7,9 +7,10 @@ import PlayListInputModal from '../components/PlayListInputModal';
 import { AudioContext } from '../context/AudioProvider';
 import color from '../misc/color';
 
-let selectPlayList ={};
+
+let selectedPlayList ={};
 // create a component
-const PlayerList = () => {
+const PlayList = ({ navigation }) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [showPlayList, setshowPlayList] = useState(false);
 
@@ -62,12 +63,11 @@ const renderPlayList = async () => {
         }
     },[]);
     
-    const handleBannerPress = async (playList) => {
+    const handleBannerPress = async playList => {
         // update playlist if there is any selected audio
         if (addToPlayList) {
             const result = await AsyncStorage.getItem('playlist');
-           
-        
+            
 
         let oldList = [];
         let updatedList = [];
@@ -105,8 +105,9 @@ const renderPlayList = async () => {
     }
 
         // if there is no audio selected then we want open the list
-        selectPlayList = playList;
-        setshowPlayList(true);
+        selectedPlayList = playList;
+        //setshowPlayList(true);
+        navigation.navigate('PlayListDetail', playList);
 
 
     }
@@ -129,12 +130,13 @@ const renderPlayList = async () => {
             <TouchableOpacity onPress={() => setModalVisible(true)}  style = {{marginTop: 15}}>
                 <Text style={styles.playListBtn}>+ Add New PlayList</Text>
             </TouchableOpacity>
+
             <PlayListInputModal visible={modalVisible} 
             onClose={() => setModalVisible(false)} 
             onSubmit={createPlayList}
             />
         </ScrollView>
-        <PlayListDetail visible={showPlayList} playList={selectPlayList}
+        <PlayListDetail visible={showPlayList} playList={selectedPlayList}
         onClose={()=>setshowPlayList(false)} />
         </>
     );
@@ -166,4 +168,4 @@ const styles = StyleSheet.create({
 });
 
 //make this component available to the app
-export default PlayerList;
+export default PlayList;

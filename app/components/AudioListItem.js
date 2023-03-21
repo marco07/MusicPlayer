@@ -25,7 +25,8 @@ const convertTime = minutes => {
 }
 
 const renderPlayPauseIcon = isPlaying => {
-    if(isPlaying) return <Entypo name="controller-paus" size={24} color={color.ACTIVE_FONT} />
+    if(isPlaying) 
+    return <Entypo name="controller-paus" size={24} color={color.ACTIVE_FONT} />
     return <Entypo name="controller-play" size={24} color={color.ACTIVE_FONT} />
 }
 
@@ -38,7 +39,7 @@ const AudioListItem = ({title, duration,onOptionPress,onAudioPress, isPlaying, a
             <View style={styles.leftContainer}>
                 <View style={[styles.thumbnail, {backgroundColor: activeListItem ? color.ACTIVE_BG: color.FONT_LIGHT}]}>
                     <Text style={styles.thumbnailText}>
-                        {activeListItem ? renderPlayPauseIcon(isPlaying):getThumbnailText(title)}
+                        {activeListItem ? renderPlayPauseIcon(isPlaying): getThumbnailText(title)}
                        
                     </Text>
                 </View>

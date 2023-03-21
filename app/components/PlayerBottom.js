@@ -11,7 +11,7 @@ const PlayerBottom = props => {
             case 'PLAY':
                 return 'pausecircle'
             case 'PAUSE':
-                return 'playcircleo'
+                return 'play'
             case 'NEXT':
                 return 'forward'
             case 'PREV':

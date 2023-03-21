@@ -24,6 +24,8 @@ export class AudioProvider extends Component {
             soundObj: null,
             currentAudio:{},
             isPlaying: false,
+            isPlayingRunning: false,
+            activePlayList: [],
             currentAudioIndex: null,
             playbackPosition: null,
             playbackDuration: null,
@@ -138,7 +140,34 @@ export class AudioProvider extends Component {
     
           });    
         }
+
+        if (playbackStatus.isLoaded && !playbackStatus.isPlaying) {
+           storeAudioForNextOpening(this.state.currentAudio, this.state.currentAudioIndex,
+            playbackStatus.positionMillis);
+        }
+
+
         if (playbackStatus.didJustFinish) {
+            if (this.state.isPlayingRunning) {
+                let audio;
+                const indexOnPlayList = this.state.activePlayList.audios.findIndex(({id})=> id === this.state.currentAudio.id);
+                const nextIndex = indexOnPlayList + 1;
+                audio = this.state.activePlayList.audios[nextIndex];
+                
+                if(!audio) audio = this.state.activePlayList.audios[0];
+
+                const indexOnAllList = this.state.audiofiles.findIndex(({id})=> id === audio.id)
+
+                const status = await playNext(this.state.playbackObj, audio.uri);
+                return this.updateState(this,{
+                    soundObj: status,
+                    isPlaying: true,
+                    currentAudio: audio,
+                    currentAudioIndex: indexOnAllList
+
+                });
+
+            }
           const nextAudioIndex = this.state.currentAudioIndex + 1;
           
           // there is no next audio to play or current audio is the last
@@ -182,8 +211,10 @@ export class AudioProvider extends Component {
 
     
   render() {
-    const {audiofiles, playList, addToPlayList, dataProvider, permissionError, playbackObj, soundObj, currentAudio, 
-        isPlaying, currentAudioIndex, playbackPosition, playbackDuration} = this.state
+    const {audiofiles, playList, addToPlayList, dataProvider, permissionError, 
+        playbackObj, soundObj, currentAudio, 
+        isPlaying, currentAudioIndex, playbackPosition, 
+        playbackDuration, isPlayingRunning, activePlayList} = this.state
     if (permissionError) return<View style={{
         
             flex: 1,
@@ -196,7 +227,8 @@ export class AudioProvider extends Component {
     </View>
     return <AudioContext.Provider value={{audiofiles, playList, addToPlayList, dataProvider, 
     playbackObj, soundObj, currentAudio, isPlaying,currentAudioIndex,  
-    totalAudioCount: this.totalAudioCount,playbackPosition, playbackDuration, 
+    totalAudioCount: this.totalAudioCount,playbackPosition, playbackDuration,
+    isPlayingRunning, activePlayList, 
     updateState: this.updateState,
     loadPreviusAudio: this.loadPreviusAudio,
     onPlaybackStatusUpdate: this.onPlaybackStatusUpdate }}>

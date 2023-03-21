@@ -1,13 +1,24 @@
 //import liraries
 import React, { Component } from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import AudioList from '../screens/AudioList';
 import Player from '../screens/Player';
 import PlayList from '../screens/PlayList';
+import PlayListDetail from '../screens/PlayListDetail';
 import { Ionicons, FontAwesome5, MaterialIcons  } from '@expo/vector-icons';
 
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
+
+const PlayListScreen = () => {
+    return <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Screen name='PlayList' component={PlayList} />
+        <Stack.Screen name='PlayListDetail' component={PlayListDetail} />
+    </Stack.Navigator>
+}
+
 // create a component
 const AppNavigator = () => {
     return <Tab.Navigator>
@@ -21,7 +32,7 @@ const AppNavigator = () => {
                  return <FontAwesome5 name="compact-disc" size={size} color={color} />
             }
         }}/>
-        <Tab.Screen  name='PlayList' component={PlayList} options={{
+        <Tab.Screen  name='PlayList' component={PlayListScreen} options={{
             tabBarIcon:({color, size}) =>{
                  return <MaterialIcons  name="my-library-music" size={size} color={color} />
             }

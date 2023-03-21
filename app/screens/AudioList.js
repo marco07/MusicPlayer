@@ -136,6 +136,12 @@ export class AudioList extends Component {
         this.setState({...this.state, OptionModalVisible:true})
     }}/>
   }
+  navigateToPlaylist = () => {
+    this.context.updateState(this.context, {
+      addToPlayList: this.currentItem,
+    });
+    this.props.navigation.navigate('PlayList');
+  };
 
   render() {
     return <AudioContext.Consumer>
