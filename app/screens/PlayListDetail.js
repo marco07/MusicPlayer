@@ -132,7 +132,7 @@ const PlayListDetail = props => {
             </View>
             <OptionModal visible={modalVisible} 
             onClose={closeModal} 
-            options={[{title: ' 🗑️Remove from playlist', onPress: removeAudio}]} 
+            options={[{title: ' - Remove from playlist', onPress: removeAudio}]} 
             currentItem={selectedItem}/>
             </>
  

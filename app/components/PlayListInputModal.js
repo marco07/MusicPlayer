@@ -24,7 +24,7 @@ const PlayListInputModal = ({ visible, onClose, onSubmit}) => {
        
             <View style={styles.modalContainer}>
              <View style={styles.inputContainer}>
-                    <Text style={{color:color.ACTIVE_BG}}>🎶 Create New PlayList</Text>    
+                    <Text style={{color:color.ACTIVE_BG}}>+ Create New PlayList</Text>    
                     <TextInput value ={playListName} onChangeText ={(text)=> setPlayListName(text)} style={styles.input}/>
                     <AntDesign name='check' size={24} 
                     color={color.ACTIVE_FONT} 

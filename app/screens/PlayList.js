@@ -128,7 +128,7 @@ const renderPlayList = async () => {
             </TouchableOpacity> ) : null} 
         
             <TouchableOpacity onPress={() => setModalVisible(true)}  style = {{marginTop: 15}}>
-                <Text style={styles.playListBtn}>🎶 Add New PlayList</Text>
+                <Text style={styles.playListBtn}>+ Add New PlayList</Text>
             </TouchableOpacity>
 
             <PlayListInputModal visible={modalVisible} 
