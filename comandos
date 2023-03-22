@@ -1,0 +1,8 @@
+npm i expo-system-ui
+npx expo prebuild -p android
+npx expo prebuild -p android
+expo login
+expo publish
+npm install -g eas-cli
+eas build:configure
+eas build -p android --profile preview
