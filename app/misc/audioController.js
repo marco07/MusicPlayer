@@ -1,13 +1,13 @@
 import { storeAudioForNextOpening } from './helper';
 
-//play audio
+
 export const play = async (playbackObj, uri, lastPosition) => {
     try {
         if (!lastPosition) return await playbackObj.loadAsync(
         { uri },
         { shouldPlay: true, progressUpdateIntervalMillis: 1000 }
       );
-      // but if there is lastPosition then we will play audio from the lastPosition
+  
     await playbackObj.loadAsync(
         { uri },
         { progressUpdateIntervalMillis: 1000 }
@@ -19,7 +19,7 @@ export const play = async (playbackObj, uri, lastPosition) => {
     }
 };
 
-// pause audio
+
 
 export const pause = async (playbackObj) => {
     try {
@@ -31,7 +31,7 @@ export const pause = async (playbackObj) => {
 };
 
 
-// resumen audio
+
 export const resume = async (playbackObj) => {
     try {
         return await playbackObj.playAsync();
@@ -42,7 +42,7 @@ export const resume = async (playbackObj) => {
 };
 
 
-//select another audio
+
 
 export const playNext = async (playbackObj, uri) =>{
     try {
@@ -55,14 +55,14 @@ export const playNext = async (playbackObj, uri) =>{
 
 }
 
-// select Audio
+
 export const selectAudio = async (audio, context, playListInfo ={}) =>{
 
         const {playbackObj, soundObj, currentAudio, updateState, audiofiles, onPlaybackStatusUpdate} = context;
         
         try {
         
-        //playing audio for the firts time
+
         if(soundObj === null){
         
             const status = await play(playbackObj, audio.uri, audio.lastPosition);
@@ -78,14 +78,14 @@ export const selectAudio = async (audio, context, playListInfo ={}) =>{
            
             }
         
-            //pause audio
+
             if(soundObj.isLoaded && soundObj.isPlaying && currentAudio.id === audio.id){
               const status = await pause(playbackObj);
               return updateState(context, {soundObj:status, isPlaying: false, playbackPosition: status.positionMillis});
              
             }
             
-            //resumen audio
+
         
             if(soundObj.isLoaded && !soundObj.isPlaying 
               && currentAudio.id === audio.id){
@@ -94,7 +94,7 @@ export const selectAudio = async (audio, context, playListInfo ={}) =>{
               
             }
         
-            //select another audio
+
             if (soundObj.isLoaded && currentAudio.id !== audio.id) {
               const status = await playNext(playbackObj, audio.uri);
               const index = audiofiles.findIndex((id) => id === audio.id)
@@ -160,7 +160,7 @@ export const changeAudio = async (context, select ) =>{
     let  index;
     let status;
     
-    // For next 
+
     if (select === 'next') {
         audio = audiofiles[currentAudioIndex + 1];
         if (!isLoaded && !isLastAudio) {
@@ -186,7 +186,7 @@ export const changeAudio = async (context, select ) =>{
         
     }
 
-    // For previous
+  
     if (select === 'previous') {
         audio = audiofiles[currentAudioIndex - 1];
     if (!isLoaded && !isFirstAudio) {

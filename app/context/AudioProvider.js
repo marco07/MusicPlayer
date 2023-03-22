@@ -74,7 +74,7 @@ export class AudioProvider extends Component {
     }
 
     loadPreviusAudio = async () => {
-        //TODO  : we need to load audio from our async storage
+
         let previousAudio = await AsyncStorage.getItem('previousAudio');
         let currentAudio;
         let currentAudioIndex;
@@ -93,16 +93,10 @@ export class AudioProvider extends Component {
     }
 
     getPermission = async () =>{
-           // Object {
-            //     "canAskAgain": true,
-            //     "expires": "never",
-            //     "granted": false,
-            //     "status": "undetermined",
-            //   }
 
         const permission = await MediaLibrary.getPermissionsAsync();
         if(permission.granted){
-            //we want to get all the audios
+
             this.getAudioFiles();
         }
 
@@ -114,18 +108,18 @@ export class AudioProvider extends Component {
            const {status, canAskAgain} = await MediaLibrary.requestPermissionsAsync();
            
            if (status === 'denied' && canAskAgain) {
-            //we are going to display alert that user must allow this permission to work this app
+           
             this.permissionAlert();
            }
 
            if (status === 'granted') {
-            //we want to get all the audios
+            
             this.getAudioFiles();
             
            }
 
            if (status === 'denied' && !canAskAgain) {
-            // we want to display some error to the user
+            
             this.setState({...this.state, permissionError:true});
            }
 
@@ -170,7 +164,7 @@ export class AudioProvider extends Component {
             }
           const nextAudioIndex = this.state.currentAudioIndex + 1;
           
-          // there is no next audio to play or current audio is the last
+
     
         if (nextAudioIndex >= this.totalAudioCount) {
            this.state.playbackObj.unloadAsync();
@@ -185,7 +179,7 @@ export class AudioProvider extends Component {
           return await storeAudioForNextOpening(this.state.audiofiles[0], 0);
         }
     
-          // otherwise we want to select next audio
+    
           const audio = this.state.audiofiles[nextAudioIndex];
           const status =  await playNext(this.state.playbackObj, audio.uri);
           this.updateState(this, {

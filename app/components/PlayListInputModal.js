@@ -1,11 +1,11 @@
-//import liraries
+
 import React, { useState } from 'react';
 import { Text, View, StyleSheet, Modal, TextInput, Dimensions, TouchableWithoutFeedback } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import color from '../misc/color';
 
 
-// create a component
+
 const PlayListInputModal = ({ visible, onClose, onSubmit}) => {
   const [playListName, setPlayListName] = useState('');
 
@@ -40,7 +40,7 @@ const PlayListInputModal = ({ visible, onClose, onSubmit}) => {
     );
 };
 
-// define your styles
+
 const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
@@ -76,5 +76,4 @@ const styles = StyleSheet.create({
   },
 });
 
-//make this component available to the app
 export default PlayListInputModal;

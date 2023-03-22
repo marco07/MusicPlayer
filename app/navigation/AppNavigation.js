@@ -22,7 +22,7 @@ const PlayListScreen = () => {
   );
 };
 
-// create a component 
+
 const AppNavigator = () => {
     return <Tab.Navigator screenOptions={{ headerShown: false }}>
         <Tab.Screen  name='Audio List'  component={AudioList} options={{

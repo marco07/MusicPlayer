@@ -1,5 +1,4 @@
-//import liraries
-import React, { Component } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, Dimensions, TouchableWithoutFeedback } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 import color from '../misc/color'
@@ -30,7 +29,7 @@ const renderPlayPauseIcon = isPlaying => {
     return <Entypo name="controller-play" size={24} color={color.ACTIVE_FONT} />
 }
 
-// create a component
+
 const AudioListItem = ({title, duration,onOptionPress,onAudioPress, isPlaying, activeListItem}) => {
     return (
         <>
@@ -68,7 +67,6 @@ const AudioListItem = ({title, duration,onOptionPress,onAudioPress, isPlaying, a
 
 const {width} = Dimensions.get('window');
 
-// define your styles
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
@@ -125,5 +123,5 @@ const styles = StyleSheet.create({
 
 });
 
-//make this component available to the app
+
 export default AudioListItem;

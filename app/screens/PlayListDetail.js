@@ -29,7 +29,7 @@ const PlayListDetail = props => {
         let activePlayList = context.activePlayList;
 
         if(context.isPlayingRunning && context.currentAudio.id === selectedItem.id){
-            //stop
+          
             await context.playbackObj.stopAsync();
             await context.playbackObj.unloadAsync();
             isPlaying = false;
@@ -64,7 +64,7 @@ const PlayListDetail = props => {
         let activePlayList = context.activePlayList;
 
         if(context.isPlayingRunning && activePlayList.id === playList.id){
-            //stop
+            
             await context.playbackObj.stopAsync();
             await context.playbackObj.unloadAsync();
             isPlaying = false;

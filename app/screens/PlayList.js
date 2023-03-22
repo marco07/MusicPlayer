@@ -1,4 +1,4 @@
-//import liraries
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, FlatList, Alert } from 'react-native';
@@ -9,7 +9,7 @@ import color from '../misc/color';
 
 
 let selectedPlayList ={};
-// create a component
+
 const PlayList = ({ navigation }) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [showPlayList, setshowPlayList] = useState(false);
@@ -64,7 +64,7 @@ const renderPlayList = async () => {
     },[]);
     
     const handleBannerPress = async playList => {
-        // update playlist if there is any selected audio
+     
         if (addToPlayList) {
             const result = await AsyncStorage.getItem('playlist');
             
@@ -78,16 +78,16 @@ const renderPlayList = async () => {
          
             updatedList = oldList.filter (list => {
                 if (list.id === playList.id) {
-                     //we want to check is that same audio is ready inside our list or not
+                    
                      for (let audio of list.audios){
                         if(audio.id === addToPlayList.id){
-                            //alert with some message
+                        
                             sameAudio = true;
                             return;
                         }
                      }
 
-                     //otherwise update playlist 
+                    
                      list.audios = [...list.audios, addToPlayList]
                 }
                 return list;
@@ -104,9 +104,9 @@ const renderPlayList = async () => {
             return AsyncStorage.setItem('playlist', JSON.stringify([...updatedList]));
     }
 
-        // if there is no audio selected then we want open the list
+      
         selectedPlayList = playList;
-        //setshowPlayList(true);
+       
         navigation.navigate('PlayListDetailScreen', playList);
 
 
@@ -142,7 +142,7 @@ const renderPlayList = async () => {
     );
 };
 
-// define your styles
+
 const styles = StyleSheet.create({
     container: {
         padding: 20,
@@ -167,5 +167,5 @@ const styles = StyleSheet.create({
     }
 });
 
-//make this component available to the app
+
 export default PlayList;

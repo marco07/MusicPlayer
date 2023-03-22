@@ -1,9 +1,9 @@
-//import liraries
+
 import React from 'react';
 import { AntDesign } from '@expo/vector-icons';
 import color from '../misc/color';
 
-// create a component
+
 const PlayerBottom = props => {
     const {iconType, size = 40, iconColor = color.FONT, onPress} = props;
     const getIconName = (type) =>{
@@ -27,5 +27,4 @@ const PlayerBottom = props => {
 };
 
 
-//make this component available to the app
 export default PlayerBottom;

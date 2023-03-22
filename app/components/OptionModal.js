@@ -1,9 +1,9 @@
-//import liraries
+
 
 import React  from 'react';
 import { View, Text, StyleSheet, Modal, StatusBar, TouchableWithoutFeedback } from 'react-native';
 import color from '../misc/color'
-// create a component
+
 const OptionModal = ({visible, currentItem,onClose, options, onPlayPress, onPlayListPress}) => {
     const {filename} = currentItem
     return <>
@@ -19,12 +19,7 @@ const OptionModal = ({visible, currentItem,onClose, options, onPlayPress, onPlay
                 <Text style={styles.option}>{optn.title}</Text>
             </TouchableWithoutFeedback>
             })}
-        {/* <TouchableWithoutFeedback onPress={onPlayPress}>
-            <Text style={styles.option}>Play</Text>
-        </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={onPlayListPress}>
-            <Text style={styles.option}>Add to PlayList</Text>
-        </TouchableWithoutFeedback> */}
+
         </View>
         </View>
         <TouchableWithoutFeedback onPress={onClose}>
@@ -35,7 +30,7 @@ const OptionModal = ({visible, currentItem,onClose, options, onPlayPress, onPlay
     </>
 };
 
-// define your styles
+
 const styles = StyleSheet.create({
     modal: {
         position:'absolute',
@@ -75,5 +70,4 @@ const styles = StyleSheet.create({
      }
 });
 
-//make this component available to the app
 export default OptionModal;

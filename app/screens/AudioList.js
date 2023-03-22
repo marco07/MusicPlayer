@@ -38,86 +38,11 @@ export class AudioList extends Component {
    
   });
 
-  // onPlaybackStatusUpdate = async playbackStatus => {
-  //   if (playbackStatus.isLoaded && playbackStatus.isPlaying) {
-  //     this.context.updateState(this.context, {
-  //       playbackPosition: playbackStatus.positionMillis,
-  //       playbackDuration: playbackStatus.durationMillis,
-
-  //     });    
-  //   }
-  //   if (playbackStatus.didJustFinish) {
-  //     const nextAudioIndex = this.context.currentAudioIndex + 1;
-      
-  //     // there is no next audio to play or current audio is the last
-
-  //   if (nextAudioIndex >= this.context.totalAudioCount) {
-  //      this.context.playbackObj.unloadAsync();
-  //      this.context.updateState(this.context, {
-  //       soundObj: null,
-  //       currentAudio: this.context.audiofiles[0],
-  //       isPlaying: false,
-  //       currentAudioIndex: 0,
-  //       playbackPosition: null,
-  //       playbackDuration: null,
-  //     });
-  //     return await storeAudioForNextOpening(this.context.audiofiles[0], 0);
-  //   }
-
-  //     // otherwise we want to select next audio
-  //     const audio = this.context.audiofiles[nextAudioIndex];
-  //     const status =  await playNext(this.context.playbackObj, audio.uri);
-  //     this.context.updateState(this.context, {
-  //       soundObj: status,
-  //       currentAudio: audio,
-  //       isPlaying: true,
-  //       currentAudioIndex: nextAudioIndex,
-  //     });
-  //     await storeAudioForNextOpening(audio, nextAudioIndex);
-  //   }
-  // }
+ 
 
   handleAudioPress = async audio => {
     await selectAudio(audio, this.context);
-    // const {playbackObj, soundObj, currentAudio, updateState, audiofiles} = this.context;
-    // //playing audio for the firts time
-    // if(soundObj === null){
-    // const playbackObj = new Audio.Sound()
-    // const status = await play(playbackObj, audio.uri);
-    // const index = audiofiles.indexOf(audio);
 
-    // updateState(this.context, {currentAudio:audio, 
-    //   playbackObj: playbackObj, soundObj: status, isPlaying:true, currentAudioIndex: index});
-
-    //   playbackObj.setOnPlaybackStatusUpdate(this.context.onPlaybackStatusUpdate);
-    //   return storeAudioForNextOpening(audio, index);
-   
-    // }
-
-    // //pause audio
-    // if(soundObj.isLoaded && soundObj.isPlaying && currentAudio.id === audio.id){
-    //   const status = await pause(playbackObj);
-    //   return updateState(this.context, {soundObj:status, isPlaying: false});
-     
-    // }
-    
-    // //resumen audio
-
-    // if(soundObj.isLoaded && !soundObj.isPlaying 
-    //   && currentAudio.id === audio.id){
-    //     const status = await resume(playbackObj);
-    //     return updateState(this.context, {soundObj:status, isPlaying: true});
-      
-    // }
-
-    // //select another audio
-    // if (soundObj.isLoaded && currentAudio.id !== audio.id) {
-    //   const status = await playNext(playbackObj, audio.uri);
-    //   const index = audiofiles.indexOf(audio)
-    //   updateState(this.context, {currentAudio:audio, 
-    //     soundObj: status, isPlaying: true, currentAudioIndex: index});
-    //   return storeAudioForNextOpening(audio, index);
-    // }
   }
 
   componentDidMount(){
@@ -155,15 +80,7 @@ export class AudioList extends Component {
                   extendedState={{isPlaying}}
                 />
                 <OptionModal
-                  // onPlayPress={() => console.log('Playing audio')}
-                  // onPlayListPress={() =>{
-                  //   this.context.updateState(this.context,{
-                  //     addToPlayList: this.currentItem,
-                  //   });
 
-                  //   this.props.navigation.navigate('PlayList');
-
-                  // }}
                   options={[{title: ' Add to playlist', onPress: this.navigateToPlaylist}]} 
                   onClose={() => this.setState({...this.state, OptionModalVisible:false}) } 
                   visible={this.state.OptionModalVisible}
@@ -178,7 +95,7 @@ export class AudioList extends Component {
   }
 }
 
-// define your styles
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
