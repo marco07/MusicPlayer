@@ -4,7 +4,7 @@ import React  from 'react';
 import { View, Text, StyleSheet, Modal, StatusBar, TouchableWithoutFeedback } from 'react-native';
 import color from '../misc/color'
 // create a component
-const OptionModal = ({visible, currentItem,onClose, onPlayPress, onPlayListPress}) => {
+const OptionModal = ({visible, currentItem,onClose, options, onPlayPress, onPlayListPress}) => {
     const {filename} = currentItem
     return <>
     <StatusBar hidden />
@@ -14,12 +14,17 @@ const OptionModal = ({visible, currentItem,onClose, onPlayPress, onPlayListPress
             {filename}
         </Text>
         <View style={styles.optionContainer}>
-        <TouchableWithoutFeedback onPress={onPlayPress}>
+            {options.map(optn => {
+                return <TouchableWithoutFeedback key={optn.title} onPress={optn.onPress}>
+                <Text style={styles.option}>{optn.title}</Text>
+            </TouchableWithoutFeedback>
+            })}
+        {/* <TouchableWithoutFeedback onPress={onPlayPress}>
             <Text style={styles.option}>Play</Text>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={onPlayListPress}>
             <Text style={styles.option}>Add to PlayList</Text>
-        </TouchableWithoutFeedback>
+        </TouchableWithoutFeedback> */}
         </View>
         </View>
         <TouchableWithoutFeedback onPress={onClose}>

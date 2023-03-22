@@ -19,10 +19,10 @@ const PlayListScreen = () => {
     </Stack.Navigator>
 }
 
-// create a component
+// create a component 
 const AppNavigator = () => {
-    return <Tab.Navigator>
-        <Tab.Screen  name='Audio List' component={AudioList} options={{
+    return <Tab.Navigator screenOptions={{ headerShown: false }}>
+        <Tab.Screen  name='Audio List'  component={AudioList} options={{
             tabBarIcon:({color, size}) =>{
                 return <Ionicons name="headset" size={size} color={color} />
             }
