@@ -107,7 +107,7 @@ const renderPlayList = async () => {
         // if there is no audio selected then we want open the list
         selectedPlayList = playList;
         //setshowPlayList(true);
-        navigation.navigate('PlayListDetail', playList);
+        navigation.navigate('PlayListDetailScreen', playList);
 
 
     }
@@ -128,7 +128,7 @@ const renderPlayList = async () => {
             </TouchableOpacity> ) : null} 
         
             <TouchableOpacity onPress={() => setModalVisible(true)}  style = {{marginTop: 15}}>
-                <Text style={styles.playListBtn}>+ Add New PlayList</Text>
+                <Text style={styles.playListBtn}> Add New PlayList</Text>
             </TouchableOpacity>
 
             <PlayListInputModal visible={modalVisible} 

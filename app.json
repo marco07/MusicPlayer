@@ -22,7 +22,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.futurodelweb.PIBCPlayer"
+      "package": "com.futurodelweb.pibcPlayer"
     },
     "web": {
       "favicon": "./assets/favicon.png"

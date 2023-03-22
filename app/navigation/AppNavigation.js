@@ -1,7 +1,8 @@
 //import liraries
-import React, { Component } from 'react';
+import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
+
 import AudioList from '../screens/AudioList';
 import Player from '../screens/Player';
 import PlayList from '../screens/PlayList';
@@ -13,11 +14,13 @@ const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 const PlayListScreen = () => {
-    return <Stack.Navigator screenOptions={{headerShown: false}}>
-        <Stack.Screen name='PlayList' component={PlayList} />
-        <Stack.Screen name='PlayListDetail' component={PlayListDetail} />
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name='PlayListScreen' component={PlayList} />
+      <Stack.Screen name='PlayListDetailScreen' component={PlayListDetail} />
     </Stack.Navigator>
-}
+  );
+};
 
 // create a component 
 const AppNavigator = () => {

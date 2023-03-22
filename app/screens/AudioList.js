@@ -164,7 +164,7 @@ export class AudioList extends Component {
                   //   this.props.navigation.navigate('PlayList');
 
                   // }}
-                  options={[{title: '+ Add to playlist', onPress: this.navigateToPlaylist}]} 
+                  options={[{title: ' Add to playlist', onPress: this.navigateToPlaylist}]} 
                   onClose={() => this.setState({...this.state, OptionModalVisible:false}) } 
                   visible={this.state.OptionModalVisible}
                   currentItem={this.currentItem}
