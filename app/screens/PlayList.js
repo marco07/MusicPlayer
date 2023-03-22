@@ -117,7 +117,7 @@ const renderPlayList = async () => {
         
 
             {playList.length ? playList.map(item => <TouchableOpacity 
-                key={ String(item.id) } 
+                key={item.id.toString()}
                 style={styles.playListBanner}
                 onPress={()=> handleBannerPress(item)}>
                 
