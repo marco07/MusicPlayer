@@ -6,3 +6,4 @@ expo publish
 npm install -g eas-cli
 eas build:configure
 eas build -p android --profile preview
+yarn cache clean 
