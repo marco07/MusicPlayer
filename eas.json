@@ -4,9 +4,12 @@
   },
   "build": {
     "development": {
-      "developmentClient": true,
       "distribution": "internal",
+      "android": {
+        "gradleCommand": ":app:assembleDebug"
+      },
       "ios": {
+        "buildConfiguration": "Debug",
         "resourceClass": "m-medium"
       }
     },
@@ -15,7 +18,6 @@
       "ios": {
         "resourceClass": "m-medium"
       }
-   
     },
     "production": {
       "ios": {
