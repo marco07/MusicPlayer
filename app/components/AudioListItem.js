@@ -24,7 +24,7 @@ const convertTime = minutes => {
 
     return `${minute}:${sec}`;
 }
-};
+
 const renderPlayPauseIcon = isPlaying => {
     if(isPlaying) 
     return(<Entypo name="controller-paus" size={24} color={color.ACTIVE_FONT} />) ;
