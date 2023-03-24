@@ -29,6 +29,8 @@ export class AudioProvider extends Component {
             currentAudioIndex: null,
             playbackPosition: null,
             playbackDuration: null,
+
+
         };
         this.totalAudioCount = 0;
     }
@@ -70,7 +72,6 @@ export class AudioProvider extends Component {
 
             audiofiles: [...audiofiles, ...media.assets]});
 
-        console.log(media.assets.length);
     }
 
     loadPreviusAudio = async () => {
@@ -225,7 +226,7 @@ export class AudioProvider extends Component {
     isPlayingRunning, activePlayList, 
     updateState: this.updateState,
     loadPreviusAudio: this.loadPreviusAudio,
-    onPlaybackStatusUpdate: this.onPlaybackStatusUpdate }}>
+    onPlaybackStatusUpdate: this.onPlaybackStatusUpdate}}>
     
     {this.props.children}
     </AudioContext.Provider>

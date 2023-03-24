@@ -6,4 +6,6 @@ expo publish
 npm install -g eas-cli
 eas build:configure
 eas build -p android --profile preview
-yarn cache clean 
+yarn cache clean
+cd android &&./gradlew clean  
+expo install react-native-reanimated react-native-gesture-handler react-native-screens react-native-safe-area-context @react-native-community/masked-view

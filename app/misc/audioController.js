@@ -52,12 +52,11 @@ export const playNext = async (playbackObj, uri) =>{
     } catch (error) {
         console.log('error inside next audio helper method', error.message);   
     }
-
+ 
 }
 
 
-export const selectAudio = async (audio, context, playListInfo ={}) =>{
-
+export const selectAudio = async (audio, context, playListInfo = {}) => {
         const {playbackObj, soundObj, currentAudio, updateState, audiofiles, onPlaybackStatusUpdate} = context;
         
         try {
@@ -70,11 +69,11 @@ export const selectAudio = async (audio, context, playListInfo ={}) =>{
             
             updateState(context, {currentAudio:audio, 
              soundObj: status, isPlaying:true, currentAudioIndex: index,
-             isPlayingRunning: false, activePlayList: [],
+             isPlayListRunning: false, activePlayList: [],
             ...playListInfo});
         
-              playbackObj.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate);
-              return storeAudioForNextOpening(audio, index);
+            playbackObj.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate);
+            return storeAudioForNextOpening(audio, index);
            
             }
         
@@ -97,14 +96,14 @@ export const selectAudio = async (audio, context, playListInfo ={}) =>{
 
             if (soundObj.isLoaded && currentAudio.id !== audio.id) {
               const status = await playNext(playbackObj, audio.uri);
-              const index = audiofiles.findIndex((id) => id === audio.id)
+              const index = audiofiles.findIndex(({id}) => id === audio.id);
               
               updateState(context, {currentAudio:audio, 
                 soundObj: status, isPlaying: true, currentAudioIndex: index,
                 isPlayingRunning: false, activePlayList: [],
                 ...playListInfo});
 
-              return storeAudioForNextOpening(audio, index);
+                return storeAudioForNextOpening(audio, index);
             }
             
         } catch (error) {

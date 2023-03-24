@@ -7,15 +7,19 @@ import OptionModal from "../components/OptionModal";
 import color from '../misc/color';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FontAwesome } from '@expo/vector-icons'; 
+import { ListItem, SearchBar } from "react-native-elements";
+import filter from "lodash.filter";
 
 
 const PlayListDetail = props => {
     const context = useContext(AudioContext);
     const playList = props.route.params;
-
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedItem, setselectedItem] = useState({});
     const [audios, setAudios] = useState(playList.audios);
+    
+
+
 
     const closeModal = () =>{
         setselectedItem({}),
@@ -93,6 +97,19 @@ const PlayListDetail = props => {
     const playAudio = async audio =>{
        await selectAudio(audio, context,{activePlayList: playList, isPlayingRunning: true});
     }
+                 
+
+
+    this.state = {
+        loading: false,
+        data: audios,
+
+      };
+    
+    
+  
+
+
     return (
    
             <>
@@ -107,15 +124,15 @@ const PlayListDetail = props => {
                     <TouchableOpacity onPress={removePlayList}>
                         <Text style={{color:'#C02B00', fontSize:16,paddingVertical: 10,}}><FontAwesome name="trash" size={24} color="red" /> Remove</Text>
                     </TouchableOpacity>
-
+                    
                 </View>
-               
+         
             {audios.length ?   <FlatList
                 contentContainerStyle = {styles.listContainer}
-                data={audios} keyExtractor={item => item.id.toString()}
+                data={this.state.data} keyExtractor={item => item.id.toString()}
                 renderItem={({item}) =>(
                     <View style={{marginBottom: 10}}>
-                      
+           
                       <AudioListItem title={item.filename} 
                       duration={item.duration}
                       isPlaying={context.isPlaying}
@@ -130,6 +147,9 @@ const PlayListDetail = props => {
                     No registered audios were found in the playlist
                     </Text>}
             </View>
+
+
+
             <OptionModal visible={modalVisible} 
             onClose={closeModal} 
             options={[{title: '  Remove from playlist', onPress: removeAudio}]} 

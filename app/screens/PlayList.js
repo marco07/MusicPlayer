@@ -1,12 +1,11 @@
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useContext, useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, FlatList, Alert } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, FlatList, Alert  } from 'react-native';
 import PlayListDetail from '../components/PlayListDetail';
 import PlayListInputModal from '../components/PlayListInputModal';
 import { AudioContext } from '../context/AudioProvider';
 import color from '../misc/color';
-
 
 let selectedPlayList ={};
 
@@ -16,7 +15,7 @@ const PlayList = ({ navigation }) => {
 
     const context = useContext(AudioContext);
 
-    const { playList, addToPlayList, updateState} = context;
+    const { playList, addToPlayList, updateState } = context;
 
 const createPlayList = async playListName =>{
        const result = await AsyncStorage.getItem('playlist');
@@ -45,7 +44,7 @@ const renderPlayList = async () => {
         if (result === null) {
             const defaultPlayList = {
                 id: Date.now(),
-                title: 'My Favorite',
+                title: '❤️ My Favorite',
                 audios: [],
             }
             
