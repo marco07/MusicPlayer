@@ -6,7 +6,6 @@ import color from '../misc/color'
 const getThumbnailText = (filename) => filename[0];
 
 const convertTime = minutes => {
-    if (minutes) {
     const hrs = minutes / 60;
     const minute = hrs.toString().split('.')[0];
     const percent = parseInt(hrs.toString().split('.')[1].slice(0,2));
