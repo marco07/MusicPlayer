@@ -1,7 +1,7 @@
-import { Text, View, StyleSheet,  TextInput } from 'react-native'
-import React, { Component, useEffect} from 'react'
+import { Text, View, StyleSheet,  TextInput, FlatList } from 'react-native'
+import React, { Component, useEffect, useState, useContext} from 'react'
 import {AudioContext} from '../context/AudioProvider';
-import { RecyclerListView, LayoutProvider} from 'recyclerlistview';
+import { RecyclerListView, LayoutProvider, DataProvider} from 'recyclerlistview';
 import { Dimensions } from 'react-native';
 import AudioListItem from '../components/AudioListItem';
 import Screen from '../components/Screen';
@@ -11,27 +11,22 @@ import {pause, play, playNext, resume, selectAudio} from '../misc/audioControlle
 import { storeAudioForNextOpening } from '../misc/helper';
 import color from '../misc/color';
 import { FontAwesome } from '@expo/vector-icons';
-
- 
+import { isUndefined } from 'lodash';
 
 export class AudioList extends Component { 
-
-  
   static contextType = AudioContext
-
+ 
   constructor(props){
     super(props);
- 
     this.state = {
       OptionModalVisible: false,
-      text: '',
-      
+      searchValue:"",
+      data:[]
     };
     this.currentItem ={};
-
+   
   }
-
-
+ 
 
   layoutProvider = new LayoutProvider(i => 'audio',(type, dim) =>{
     switch (type) {
@@ -57,9 +52,10 @@ export class AudioList extends Component {
 
   componentDidMount(){
     this.context.loadPreviusAudio();
+
   }
 
-
+  
 
   rowRenderer = (type, item, index, extendedState) =>{
   
@@ -79,38 +75,72 @@ export class AudioList extends Component {
     });
     this.props.navigation.navigate('PlayList');
   };
+  
 
   
-  filterSerch(text){
-    const newData = this.context.audiofiles.map(a => a.filename).filter(function(item){
-      const itemData = item.toUpperCase();
-      const textData = text.toUpperCase();
-      console.log(textData);
-      //return itemData.indexOf(textData) > -1;
-
-      });
-
-      this.setState({
-        text: text
-    })
-
-  }
   render() {
+
     return <AudioContext.Consumer>
-        {({dataProvider, isPlaying}) => {
-            if (!dataProvider._data.length) return null;
+   
+        {({dataProvider, isPlaying}) => { 
+         
+          
+           if (!dataProvider._data.length) return this.state.data;
+           const playAudio = async audio =>{
+            await selectAudio(audio, context,{activePlayList: playList, isPlayingRunning: true});
+         }
+            searchName = (input) =>{
+              let data = dataProvider._data.map(item => item);
+              let searchData = data.filter((item) => {
+                const item_data = `${item.filename.toUpperCase()})`;  
+                  
+                const text_data = input.toUpperCase();
+                return item_data.indexOf(text_data) > -1;
+              }); 
+              
+              this.setState({ data: searchData, searchValue: input });
+              //console.log(this.state.data)
+            
+            }
+
             return (
+              
               <>
                <TextInput style={styles.input} placeholder={'Search audio ...'} 
-                 onChangeText={(text)=> this.filterSerch(text)}
-                 value={this.state.text}/>
-
-                <Screen>
-                 <RecyclerListView dataProvider={dataProvider} 
-                  layoutProvider={this.layoutProvider} 
-                  rowRenderer={this.rowRenderer}
-                  extendedState={{isPlaying}}
-                />
+                 value={this.state.searchValue}
+                 onChangeText={(input) => searchName(input)} />
+               
+                <Screen> 
+               
+                
+                { this.state.data.length == 0 ||isUndefined(this.state.data)  || !this.state.searchValue ?
+                 //console.log(this.state.data)
+                 <RecyclerListView dataProvider={ dataProvider } 
+                layoutProvider={this.layoutProvider} 
+                rowRenderer={this.rowRenderer}
+                extendedState={{isPlaying}}
+                 />
+                :
+                <FlatList data={ this.state.data } 
+                layoutProvider={this.layoutProvider} 
+                renderItem={({item}) =>(
+                  <View style={{marginBottom: 10}}>
+         
+                    <AudioListItem title={item.filename} 
+                    duration={item.duration}
+                    isPlaying={isPlaying}
+                    activeListItem = {item.id} 
+                    onAudioPress = {() => playAudio(item)}
+                    onOptionPress={() =>{
+                      setselectedItem(item),
+                      setModalVisible(true)
+                    }} />
+                  </View>
+              )}/>
+                
+               }
+                        
+               
                 <OptionModal
 
                   options={[{title: ' Add to playlist', onPress: this.navigateToPlaylist}]} 
