@@ -10,8 +10,8 @@ import { Audio } from 'expo-av';
 import {pause, play, playNext, resume, selectAudio} from '../misc/audioController';
 import { storeAudioForNextOpening } from '../misc/helper';
 import color from '../misc/color';
-import { FontAwesome } from '@expo/vector-icons';
-import { isUndefined } from 'lodash';
+
+
 
 export class AudioList extends Component { 
   static contextType = AudioContext
@@ -47,6 +47,7 @@ export class AudioList extends Component {
 
   handleAudioPress = async audio => {
     await selectAudio(audio, this.context);
+    this.setState({ searchValue: "" });
 
   }
 
@@ -86,9 +87,7 @@ export class AudioList extends Component {
          
           
            if (!dataProvider._data.length) return this.state.data;
-           const playAudio = async audio =>{
-            await selectAudio(audio, context,{activePlayList: playList, isPlayingRunning: true});
-         }
+     
             searchName = (input) =>{
               let data = dataProvider._data.map(item => item);
               let searchData = data.filter((item) => {
@@ -113,28 +112,30 @@ export class AudioList extends Component {
                 <Screen> 
                
                 
-                { this.state.data.length == 0 ||isUndefined(this.state.data)  || !this.state.searchValue ?
+              { this.state.data.length == 0 || !this.state.searchValue ?
                  //console.log(this.state.data)
                  <RecyclerListView dataProvider={ dataProvider } 
-                layoutProvider={this.layoutProvider} 
-                rowRenderer={this.rowRenderer}
-                extendedState={{isPlaying}}
-                 />
+                  layoutProvider={this.layoutProvider} 
+                  rowRenderer={this.rowRenderer}
+                  extendedState={{isPlaying}}
+                  />
                 :
+              //console.log(this.state.data)
                 <FlatList data={ this.state.data } 
                 layoutProvider={this.layoutProvider} 
                 renderItem={({item}) =>(
                   <View style={{marginBottom: 10}}>
          
-                    <AudioListItem title={item.filename} 
+                    <AudioListItem title={item.filename}
+                    isPlaying= {this.extendedState}
+                    activeListItem={this.context.currentAudioIndex === this.index}
                     duration={item.duration}
-                    isPlaying={isPlaying}
-                    activeListItem = {item.id} 
-                    onAudioPress = {() => playAudio(item)}
-                    onOptionPress={() =>{
-                      setselectedItem(item),
-                      setModalVisible(true)
-                    }} />
+                    onAudioPress={() => this.handleAudioPress(item)} 
+                    onOptionPress={() => {
+                        this.currentItem = item;
+                        this.setState({...this.state, OptionModalVisible:true})
+                    }}/>
+ 
                   </View>
               )}/>
                 
