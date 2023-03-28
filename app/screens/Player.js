@@ -9,14 +9,16 @@ import PlayerBottom from '../components/PlayerBottom';
 import {AudioContext} from '../context/AudioProvider';
 import {changeAudio, moveAudio, pause, play, playNext, resume, selectAudio} from '../misc/audioController';
 import { convertTime, storeAudioForNextOpening } from '../misc/helper';
+import * as Animatable from 'react-native-animatable'
 
 
-const { width } = Dimensions.get('window')
+const { width } = Dimensions.get('window') /1.5
 
 const Player = () => {
     const [currentPosition, setCurrentPosition ] = useState(0);
     const context = useContext(AudioContext);
     const { playbackPosition, playbackDuration,currentAudio } = context;
+    
 
     const calculateSeeBar = () =>{
         if(playbackPosition !== null && playbackDuration !== null){
@@ -31,6 +33,8 @@ const Player = () => {
 
     useEffect(()=>{
         context.loadPreviusAudio();
+   
+
 
     }, []);
 
@@ -59,39 +63,40 @@ const handlePrevious = async () => {
 
     if (!context.currentAudio) return null;
 
+    const thumbImage = require('../../assets/play.png');
     return (<Screen>
         <View style={styles.container}> 
         <View style={styles.audioCountContainer}>
-          <View style={{flexDirection:'row'}}>
+        <View style={{flexDirection:'row'}}>
            {context.isPlayingRunning && (
             <>
-              <Text style={{fontWeight:'bold'}}>From PlayList: </Text>
-              <Text>{context.activePlayList.title}</Text>
+              <Text style={{fontWeight:'bold'}}>{context.activePlayList.title}</Text>
+              <Text></Text>
             </>
             
            )}
            </View>
            <Text style={styles.audioCount}>{`${context.currentAudioIndex + 1} / ${ context.totalAudioCount}`}</Text>
         </View>
-            
+                   
             <View style={styles.midBannerContainer}>
-                <MaterialCommunityIcons name="music-circle" size={300} 
-                color={ context.isPlaying ? color.ACTIVE_BG : color.FONT_MEDIUM} />
+            
+            <Animatable.Text animation={context.isPlaying ? "pulse" : "" } easing="ease-out" iterationCount="infinite"> <MaterialCommunityIcons name="music-circle" size={260} 
+                color={ context.isPlaying ? color.ACTIVE_BG : color.FONT_LIGHT} /></Animatable.Text>
             </View>
             <View style={styles.audioPlayerContainer}>
-                <Text numberOfLines={1} style={styles.audioTitle}>
+                <Text numberOfLines={2} style={styles.audioTitle}>
                     {context.currentAudio.filename}
                 </Text>
-                <View style={{flexDirection:'row', justifyContent: 'space-between', paddingHorizontal:15}}>
-                    <Text>{convertTime(context.currentAudio.duration)}</Text>
-                    <Text>{currentPosition ? currentPosition : renderCurrentTime()}</Text>
-                </View>
-                <Slider style={{with:width, height:40}}
+                <Slider
+                   style={{with:width - 20, height:40, padding:20}}
                     minimunValue={0}
                     maximunValue={1}
                     value = { calculateSeeBar() }
-                    minimumTrackTintColor={color.FONT_MEDIUM}
-                    maximumTrackTintColor={color.ACTIVE_BG}
+                    minimumTrackTintColor={color.ACTIVE_BG}
+                    maximumTrackTintColor={color.FONT_MEDIUM}
+                    thumbImage={thumbImage}
+                 
                     onValueChange={value => {
                         setCurrentPosition(
                           convertTime(value * context.currentAudio.duration)
@@ -111,11 +116,16 @@ const handlePrevious = async () => {
                         setCurrentPosition(0);
                       }}             
                 />
+                <View style={{flexDirection:'row', justifyContent: 'space-between', paddingHorizontal:16, marginTop:10, marginBottom:20}}>
+                    <Text style={{color:color.FONT_LIGHT}}>{currentPosition ? currentPosition : renderCurrentTime()}</Text>
+                    <Text style={{color:color.FONT_LIGHT}}>{convertTime(context.currentAudio.duration)}</Text>
+                  
+                </View>
                 <View style={styles.audioControllers}>
                     <PlayerBottom iconType='PREV' onPress={ handlePrevious }/>
                    
                     <PlayerBottom onPress={ handlePlayPause } 
-                    style={{marginHorizontal: 30}} 
+                    style={{marginHorizontal: 50, fontSize:55}} 
                     iconType={ context.isPlaying ? 'PLAY' : 'PAUSE'}
                     />
                    
@@ -133,7 +143,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent:'center',
         alignItems: 'center',
-        paddingBottom: 25,
+        marginBottom: 50,
     },
     container: {
         flex: 1,
@@ -142,6 +152,9 @@ const styles = StyleSheet.create({
        flexDirection:'row',
        justifyContent:'space-between',
        paddingHorizontal: 15,
+     },
+     audioPlayerContainer:{
+      marginVertical:-20,
      },
      audioCount: {
         textAlign:'right',
@@ -154,9 +167,10 @@ const styles = StyleSheet.create({
         alignItems:'center',
      },
      audioTitle:{
-        fontSize:16,
+        fontSize:14,
         color:color.FONT,
         padding:20,
+
      }
 });
 

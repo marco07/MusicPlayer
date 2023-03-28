@@ -5,7 +5,7 @@ import color from '../misc/color';
 
 
 const PlayerBottom = props => {
-    const {iconType, size = 40, iconColor = color.FONT, onPress} = props;
+    const {iconType, size = 35, iconColor = color.FONT, onPress} = props;
     const getIconName = (type) =>{
         switch (type) {
             case 'PLAY':
