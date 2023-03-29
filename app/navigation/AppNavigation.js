@@ -12,8 +12,6 @@ import { View, Text, StyleSheet, Dimensions, Image } from 'react-native';
 
 
 
-
-
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -38,7 +36,7 @@ function LogoTitle() {
 }
 
 const AppNavigator = () => {
- 
+
     return <Tab.Navigator 
     screenOptions={({ route }) => ({
       headerShown: true,
@@ -64,7 +62,7 @@ const AppNavigator = () => {
                 return <Ionicons name="headset" size={size} color={focused ? color.ACTIVE_BG : color.FONT_LIGHT_BAR} />
             },
             tabBarLabel: ({focused, color, size}) => (  
-              <Text style={[{color: focused ? '#B60D00' : color.FONT_LIGHT_BAR, fontSize:13}]}>Audio List</Text>
+              <Text style={[{color: focused ? '#B60D00' : color.FONT_LIGHT_BAR}]} size={size} >{focused?"Audio List": ""}</Text>
             )
         }}/>
         <Tab.Screen  name='Player' component={Player} options={{
@@ -81,7 +79,7 @@ const AppNavigator = () => {
                  return <FontAwesome5 name="compact-disc" size={size} color={focused ? color.ACTIVE_BG : color.FONT_LIGHT_BAR} />
             },
             tabBarLabel: ({focused, color, size}) => (  
-              <Text style={[{color: focused ? '#B60D00' : color.FONT_LIGHT_BAR, fontSize:13}]}>Play</Text>
+              <Text style={[{color: focused ? '#B60D00' : color.FONT_LIGHT_BAR}]} size={size} >{focused?"Play": ""}</Text>
             ),
         }}/>
         <Tab.Screen  name='PlayList' component={PlayListScreen} options={{
@@ -98,7 +96,7 @@ const AppNavigator = () => {
                  return <MaterialIcons  name="my-library-music" size={size} color={focused ? color.ACTIVE_BG : color.FONT_LIGHT_BAR} />
             },
             tabBarLabel: ({focused, color, size}) => (  
-              <Text style={[{color: focused ? '#B60D00' : color.FONT_LIGHT_BAR, fontSize:13}]}>Play List</Text>
+              <Text style={[{color: focused ? '#B60D00' : color.FONT_LIGHT_BAR}]} size={size}>{focused?"Play List": ""}</Text>
             ),
           
         }}/>

@@ -1,14 +1,11 @@
 
-import { View, StatusBar, StyleSheet } from 'react-native'
+import { View, StatusBar, StyleSheet} from 'react-native'
 import color from '../misc/color'
-import { useNavigation } from '@react-navigation/native';
+
 
 
 const Screen = ({children}) => {
- const navigation = useNavigation();
-
-
-
+ 
     return (
       <View style={styles.container}>
         {children}

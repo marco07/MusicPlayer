@@ -7,8 +7,8 @@ import OptionModal from "../components/OptionModal";
 import color from '../misc/color';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FontAwesome } from '@expo/vector-icons'; 
-import { ListItem, SearchBar } from "react-native-elements";
-import filter from "lodash.filter";
+
+
 
 
 const PlayListDetail = props => {

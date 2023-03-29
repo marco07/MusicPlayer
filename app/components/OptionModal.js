@@ -1,5 +1,3 @@
-
-
 import React  from 'react';
 import { View, Text, StyleSheet, Modal, StatusBar, TouchableWithoutFeedback } from 'react-native';
 import color from '../misc/color'

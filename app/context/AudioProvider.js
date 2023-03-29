@@ -193,9 +193,8 @@ export class AudioProvider extends Component {
         }
       }
 
-   componentDidMount(){
-   
-        
+    componentDidMount(){
+        this.getPermission();
         if (this.state.playbackObj === null) {
             this.setState({...this.state, playbackObj: new Audio.Sound()})
         }
@@ -205,7 +204,7 @@ export class AudioProvider extends Component {
         this.setState({...prevState, ...newState})
     }
 
-
+    
   render() {
     const {audiofiles, playList, addToPlayList, dataProvider, permissionError, 
         playbackObj, soundObj, currentAudio, 

@@ -12,7 +12,7 @@ import { convertTime, storeAudioForNextOpening } from '../misc/helper';
 import * as Animatable from 'react-native-animatable'
 
 
-const { width } = Dimensions.get('window') /1.5
+const { width } = Dimensions.get('window');
 
 const Player = () => {
     const [currentPosition, setCurrentPosition ] = useState(0);
@@ -81,8 +81,8 @@ const handlePrevious = async () => {
                    
             <View style={styles.midBannerContainer}>
             
-            <Animatable.Text animation={context.isPlaying ? "pulse" : "" } easing="ease-out" iterationCount="infinite"> <MaterialCommunityIcons name="music-circle" size={260} 
-                color={ context.isPlaying ? color.ACTIVE_BG : color.FONT_LIGHT} /></Animatable.Text>
+            <MaterialCommunityIcons name="music-circle" size={260} 
+                color={ context.isPlaying ? color.ACTIVE_BG : color.FONT_LIGHT} />
             </View>
             <View style={styles.audioPlayerContainer}>
                 <Text numberOfLines={2} style={styles.audioTitle}>
