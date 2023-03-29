@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign  } from '@expo/vector-icons';
 import color from '../misc/color';
 
 
@@ -16,13 +16,15 @@ const PlayerBottom = props => {
                 return 'forward'
             case 'PREV':
                 return 'banckward'
+     
         }
     }
+   
 
 
 
     return (
-        <AntDesign {...props} onPress={onPress} name={getIconName(iconType)} size={size} color = {iconColor}/>
+        <AntDesign {...props}  name={getIconName(iconType)} size={size} color = {iconColor}/>
     );
 };
 

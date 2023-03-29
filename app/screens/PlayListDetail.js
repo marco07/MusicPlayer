@@ -1,5 +1,5 @@
 import React, {useContext, useState} from "react";
-import { View, StyleSheet, Modal, Text, FlatList, Dimensions, TouchableOpacity} from "react-native";
+import { View, StyleSheet, Modal, Text, FlatList,  TouchableOpacity} from "react-native";
 import AudioListItem from '../components/AudioListItem';
 import { selectAudio } from '../misc/audioController';
 import { AudioContext } from '../context/AudioProvider';
@@ -107,7 +107,7 @@ const PlayListDetail = props => {
       };
     
     
-  
+      const [toggleCheckBox, setToggleCheckBox] = useState(false)
 
 
     return (
@@ -118,9 +118,14 @@ const PlayListDetail = props => {
                     width: '100%',
                     flexDirection: 'row',
                     justifyContent: 'space-between',
+                    alignItems:'center',
                     paddingHorizontal: 15,
                 }}>
+                   
+     
+                   
                     <Text style={styles.title}>{playList.title}</Text>
+             
                     <TouchableOpacity onPress={removePlayList}>
                         <Text style={{color:'#C02B00', fontSize:16,paddingVertical: 10,}}><FontAwesome name="trash" size={24} color="red" /> Remove</Text>
                     </TouchableOpacity>
@@ -132,7 +137,7 @@ const PlayListDetail = props => {
                 data={this.state.data} keyExtractor={item => item.id.toString()}
                 renderItem={({item}) =>(
                     <View style={{marginBottom: 10}}>
-           
+               
                       <AudioListItem title={item.filename} 
                       duration={item.duration}
                       isPlaying={context.isPlaying}

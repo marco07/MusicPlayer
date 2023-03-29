@@ -1,6 +1,6 @@
 //import liraries
 import React, { useContext, useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import Screen from '../components/Screen'
 import color from '../misc/color';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -12,7 +12,7 @@ import { convertTime, storeAudioForNextOpening } from '../misc/helper';
 import * as Animatable from 'react-native-animatable'
 
 
-const { width } = Dimensions.get('window');
+const { width } = Dimensions.get('window') /1.5
 
 const Player = () => {
     const [currentPosition, setCurrentPosition ] = useState(0);
@@ -33,6 +33,7 @@ const Player = () => {
 
     useEffect(()=>{
         context.loadPreviusAudio();
+      
    
 
 
@@ -67,27 +68,33 @@ const handlePrevious = async () => {
     return (<Screen>
         <View style={styles.container}> 
         <View style={styles.audioCountContainer}>
-        <View style={{flexDirection:'row'}}>
+        <View style={{flexDirection:'column'}}>
            {context.isPlayingRunning && (
             <>
+             <Text style={{ fontSize:13}}>Playlist: </Text>
               <Text style={{fontWeight:'bold'}}>{context.activePlayList.title}</Text>
-              <Text></Text>
+              
             </>
             
            )}
            </View>
-           <Text style={styles.audioCount}>{`${context.currentAudioIndex + 1} / ${ context.totalAudioCount}`}</Text>
+           <Text style={styles.audioCount}> {`${context.currentAudioIndex + 1} / ${ context.totalAudioCount}`}</Text>
         </View>
                    
             <View style={styles.midBannerContainer}>
             
-            <MaterialCommunityIcons name="music-circle" size={260} 
-                color={ context.isPlaying ? color.ACTIVE_BG : color.FONT_LIGHT} />
+            <Animatable.Text animation={context.isPlaying ? "pulse" : "" } easing="ease-out" iterationCount="infinite"> <MaterialCommunityIcons name="music-circle" size={260} 
+                color={ context.isPlaying ? color.ACTIVE_BG : color.FONT_LIGHT} /></Animatable.Text>
             </View>
             <View style={styles.audioPlayerContainer}>
+            
                 <Text numberOfLines={2} style={styles.audioTitle}>
-                    {context.currentAudio.filename}
+                    {context.currentAudio.filename} 
                 </Text>
+                <View style={{flexDirection:'row', justifyContent: 'space-between', paddingHorizontal:16, marginTop:5}}>
+                    <Text style={{color:color.FONT_LIGHT}}>{convertTime(context.currentAudio.duration)}</Text>
+                    <Text style={{color:color.FONT_LIGHT}}> - {currentPosition ? currentPosition : renderCurrentTime()}</Text>                  
+                </View>
                 <Slider
                    style={{with:width - 20, height:40, padding:20}}
                     minimunValue={0}
@@ -116,22 +123,27 @@ const handlePrevious = async () => {
                         setCurrentPosition(0);
                       }}             
                 />
-                <View style={{flexDirection:'row', justifyContent: 'space-between', paddingHorizontal:16, marginTop:10, marginBottom:20}}>
-                    <Text style={{color:color.FONT_LIGHT}}>{currentPosition ? currentPosition : renderCurrentTime()}</Text>
-                    <Text style={{color:color.FONT_LIGHT}}>{convertTime(context.currentAudio.duration)}</Text>
-                  
-                </View>
+             
                 <View style={styles.audioControllers}>
-                    <PlayerBottom iconType='PREV' onPress={ handlePrevious }/>
-                   
-                    <PlayerBottom onPress={ handlePlayPause } 
+                    <TouchableOpacity onPress={ handlePrevious }>
+                      <PlayerBottom iconType='PREV' />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={ handlePlayPause }>
+                      <PlayerBottom  
                     style={{marginHorizontal: 50, fontSize:55}} 
                     iconType={ context.isPlaying ? 'PLAY' : 'PAUSE'}
                     />
-                   
-                    <PlayerBottom iconType='NEXT' onPress={ handleNext } />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={ handleNext } >
+                     <PlayerBottom iconType='NEXT' />
+                    </TouchableOpacity>
+
+                    
                 </View>
+                
             </View>
+         
         </View>
     </Screen>)
 };
@@ -167,9 +179,10 @@ const styles = StyleSheet.create({
         alignItems:'center',
      },
      audioTitle:{
-        fontSize:14,
+        fontSize:13,
         color:color.FONT,
         padding:20,
+        fontWeight:'500'
 
      }
 });

@@ -44,7 +44,7 @@ const renderPlayList = async () => {
         if (result === null) {
             const defaultPlayList = {
                 id: Date.now(),
-                title: '❤️ My Favorite',
+                title: 'My Favorite',
                 audios: [],
             }
             

@@ -9,7 +9,7 @@ import PlayListDetail from '../screens/PlayListDetail';
 import { Ionicons, FontAwesome5, MaterialIcons  } from '@expo/vector-icons';
 import color from '../misc/color';
 import { View, Text, StyleSheet, Dimensions, Image } from 'react-native';
-
+import * as Animatable from 'react-native-animatable'
 
 
 const Tab = createBottomTabNavigator();
@@ -27,11 +27,13 @@ const PlayListScreen = () => {
 
 function LogoTitle() {
   return (
+    <View style={{flexDirection:'row', alignItems:'center'}}>
     <Image
       style={{ width: 35, height: 35 }}
       source={require('../../assets/pibc.png')}
     />
-
+    <Text style={{color:color.ACTIVE_FONT, fontWeight:'600'}}>PIBC MUSICAL</Text>
+    </View>
   );
 }
 
@@ -47,6 +49,8 @@ const AppNavigator = () => {
 
     },
   })}>
+        
+   
         <Tab.Screen  name='AudioList'  component={AudioList} options={{
           title: 'Audio List',
           headerTitle: (props) => <LogoTitle {...props}/> ,
@@ -57,7 +61,7 @@ const AppNavigator = () => {
           headerTitleStyle: {
             fontWeight: 'bold',
           },
-
+            
             tabBarIcon:({focused, size}) =>{
                 return <Ionicons name="headset" size={size} color={focused ? color.ACTIVE_BG : color.FONT_LIGHT_BAR} />
             },
@@ -65,6 +69,7 @@ const AppNavigator = () => {
               <Text style={[{color: focused ? '#B60D00' : color.FONT_LIGHT_BAR}]} size={size} >{focused?"Audio List": ""}</Text>
             )
         }}/>
+
         <Tab.Screen  name='Player' component={Player} options={{
                 title: 'Player',
                 headerTitle: (props) => <LogoTitle {...props}/> ,

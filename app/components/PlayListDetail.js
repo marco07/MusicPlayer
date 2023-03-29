@@ -6,7 +6,10 @@ import color from '../misc/color';
 
 const PlayListDetail = ({visible, playList, onClose }) => {
     const playAudio = (audio) =>{
-        selectAudio(audio,);
+        selectAudio(audio,context, {
+            activePlayList: playList,
+            isPlayListRunning: true,
+          });
     }
     return (
         <Modal visible={visible} animationType='slide' transparent
