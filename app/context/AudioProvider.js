@@ -29,8 +29,7 @@ export class AudioProvider extends Component {
             currentAudioIndex: null,
             playbackPosition: null,
             playbackDuration: null,
-
-
+            
         };
         this.totalAudioCount = 0;
     }
@@ -198,7 +197,14 @@ export class AudioProvider extends Component {
         if (this.state.playbackObj === null) {
             this.setState({...this.state, playbackObj: new Audio.Sound()})
         }
+        Audio.setAudioModeAsync({
+            staysActiveInBackground: true,
+            shouldDuckAndroid: true,
+            playThroughEarpieceAndroid: false,
+        });
+       
     }
+    
 
     updateState = (prevState, newState = {}) => {
         this.setState({...prevState, ...newState})
@@ -223,7 +229,7 @@ export class AudioProvider extends Component {
     return <AudioContext.Provider value={{audiofiles, playList, addToPlayList, dataProvider, 
     playbackObj, soundObj, currentAudio, isPlaying,currentAudioIndex,  
     totalAudioCount: this.totalAudioCount,playbackPosition, playbackDuration,
-    isPlayingRunning, activePlayList, 
+    isPlayingRunning, activePlayList,
     updateState: this.updateState,
     loadPreviusAudio: this.loadPreviusAudio,
     onPlaybackStatusUpdate: this.onPlaybackStatusUpdate}}>

@@ -5,7 +5,7 @@ export const play = async (playbackObj, uri, lastPosition) => {
     try {
         if (!lastPosition) return await playbackObj.loadAsync(
         { uri },
-        { shouldPlay: true, progressUpdateIntervalMillis: 1000 }
+        { shouldPlay: true, progressUpdateIntervalMillis: 1000, staysActiveInBackground: true }
       );
   
     await playbackObj.loadAsync(
@@ -182,7 +182,7 @@ export const changeAudio = async (context, select ) =>{
             index = 0;
             audio = audiofiles[index];
             if (isLoaded) {
-                status = await playNext(playbackObj, audio.uri); 
+                if(isCheck) status = await playNext(playbackObj, audio.uri); 
             }else{
                 status = await play(playbackObj, audio.uri); 
             }
