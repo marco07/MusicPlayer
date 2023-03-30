@@ -7,6 +7,7 @@ import { Audio } from 'expo-av';
 import { storeAudioForNextOpening } from '../misc/helper';
 import { playNext } from '../misc/audioController';
 
+
 export const AudioContext = createContext();
 
 export class AudioProvider extends Component {
@@ -29,6 +30,7 @@ export class AudioProvider extends Component {
             currentAudioIndex: null,
             playbackPosition: null,
             playbackDuration: null,
+            
             
         };
         this.totalAudioCount = 0;
@@ -192,15 +194,17 @@ export class AudioProvider extends Component {
         }
       }
 
-    componentDidMount(){
+    async componentDidMount(){
         this.getPermission();
         if (this.state.playbackObj === null) {
             this.setState({...this.state, playbackObj: new Audio.Sound()})
         }
+        await Audio.setIsEnabledAsync(true);
         Audio.setAudioModeAsync({
             staysActiveInBackground: true,
             shouldDuckAndroid: true,
             playThroughEarpieceAndroid: false,
+            
         });
        
     }

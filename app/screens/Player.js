@@ -38,8 +38,7 @@ const Player = () => {
     }, []);
 
    const handlePlayPause = async () =>{
-    await selectAudio(context.currentAudio, context);
-  
+       await selectAudio(context.currentAudio, context);
    };
 
 const handleNext = async () => {
@@ -184,7 +183,7 @@ const styles = StyleSheet.create({
         alignItems:'center',
      },
      audioTitle:{
-        fontSize:13,
+        fontSize:14,
         color:color.FONT,
         padding:20,
         fontWeight:'500'

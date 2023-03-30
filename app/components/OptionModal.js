@@ -5,7 +5,7 @@ import color from '../misc/color'
 const OptionModal = ({visible, currentItem,onClose, options, onPlayPress, onPlayListPress}) => {
     const {filename} = currentItem
     return <>
-    <StatusBar translucent = {true} />
+    <StatusBar translucent = {true} backgroundColor={color.ACTIVE_BG} />
     <Modal animationType='fade' transparent visible={visible}>
         <View style={styles.modal}>
         <Text style={styles.title} numberOfLines={2}>
