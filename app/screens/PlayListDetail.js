@@ -17,7 +17,7 @@ const PlayListDetail = props => {
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedItem, setselectedItem] = useState({});
     const [audios, setAudios] = useState(playList.audios);
-    
+  
 
 
 
@@ -95,7 +95,8 @@ const PlayListDetail = props => {
 
 
     const playAudio = async audio =>{
-       await selectAudio(audio, context,{activePlayList: playList, isPlayingRunning: true});
+        await selectAudio(audio, context,{activePlayList: playList, isPlayingRunning: true});
+       
     }
                  
 
@@ -107,9 +108,6 @@ const PlayListDetail = props => {
       };
     
     
-  
-
-
     return (
    
             <>
@@ -132,6 +130,7 @@ const PlayListDetail = props => {
                     
                 </View>
                 
+ 
             {audios.length ?   <FlatList
                 contentContainerStyle = {styles.listContainer}
                 data={this.state.data} keyExtractor={item => item.id.toString()}
@@ -180,5 +179,6 @@ const styles = StyleSheet.create({
         fontWeight:'bold',
         color: color.ACTIVE_BG,
     },
+   
 });
 export default PlayListDetail;

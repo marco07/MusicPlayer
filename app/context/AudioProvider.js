@@ -178,6 +178,8 @@ export class AudioProvider extends Component {
             playbackPosition: null,
             playbackDuration: null,
           });
+
+          
           return await storeAudioForNextOpening(this.state.audiofiles[0], 0);
         }
     

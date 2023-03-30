@@ -10,7 +10,7 @@ import {AudioContext} from '../context/AudioProvider';
 import {changeAudio, moveAudio, pause, play, playNext, resume, selectAudio} from '../misc/audioController';
 import { convertTime, storeAudioForNextOpening } from '../misc/helper';
 import * as Animatable from 'react-native-animatable'
-
+//import Checkbox from 'expo-checkbox';
 
 const { width } = Dimensions.get('window') /1.5
 
@@ -19,6 +19,7 @@ const Player = () => {
     const [currentPosition, setCurrentPosition ] = useState(0);
     const context = useContext(AudioContext);
     const { playbackPosition, playbackDuration,currentAudio } = context;
+    //const [isChecked, setChecked] = useState(false);
    
 
     const calculateSeeBar = () =>{
@@ -37,16 +38,16 @@ const Player = () => {
       
     }, []);
 
+  
    const handlePlayPause = async () =>{
-       await selectAudio(context.currentAudio, context);
+      await selectAudio(context.currentAudio, context)
+
    };
 
+
 const handleNext = async () => {
-    await changeAudio(context, 'next');
-
-
+    await changeAudio(context, 'next'); 
 };
-
 const handlePrevious = async () => {
      await changeAudio(context, 'previous');
 
@@ -122,6 +123,11 @@ const handlePrevious = async () => {
                         setCurrentPosition(0);
                       }}             
                 />
+
+            {/* <View style={styles.section}>
+              <Checkbox style={styles.checkbox} value={isChecked} onValueChange={setChecked} />
+              <Text style={styles.paragraph}>Autoplay</Text>
+            </View> */}
              
                 <View style={styles.audioControllers}>
                     <TouchableOpacity onPress={ handlePrevious }>
@@ -184,7 +190,17 @@ const styles = StyleSheet.create({
         fontWeight:'500'
 
      },
-   
+     section: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginLeft:10
+    },
+    checkbox: {
+      margin: 8,
+    },
+    paragraph: {
+      fontSize: 13,
+    },
 });
 
 
