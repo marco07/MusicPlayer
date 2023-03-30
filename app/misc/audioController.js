@@ -116,8 +116,6 @@ export const selectAudio = async (audio, context, playListInfo = {}) => {
 
 
 
-
-
 const selectAudioFromPlayList = async (context, select) =>{
     const {  activePlayList, currentAudio, audiofiles, playbackObj , updateState} = context;
                 let audio;
@@ -182,7 +180,7 @@ export const changeAudio = async (context, select ) =>{
             index = 0;
             audio = audiofiles[index];
             if (isLoaded) {
-                if(isCheck) status = await playNext(playbackObj, audio.uri); 
+                status = await playNext(playbackObj, audio.uri); 
             }else{
                 status = await play(playbackObj, audio.uri); 
             }

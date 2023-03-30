@@ -107,7 +107,7 @@ const PlayListDetail = props => {
       };
     
     
-      const [toggleCheckBox, setToggleCheckBox] = useState(false)
+  
 
 
     return (
@@ -131,7 +131,7 @@ const PlayListDetail = props => {
                     </TouchableOpacity>
                     
                 </View>
-         
+                
             {audios.length ?   <FlatList
                 contentContainerStyle = {styles.listContainer}
                 data={this.state.data} keyExtractor={item => item.id.toString()}

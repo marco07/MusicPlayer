@@ -30,7 +30,7 @@ export class AudioProvider extends Component {
             currentAudioIndex: null,
             playbackPosition: null,
             playbackDuration: null,
-            
+
             
         };
         this.totalAudioCount = 0;

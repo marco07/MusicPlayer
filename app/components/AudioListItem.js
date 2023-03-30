@@ -2,9 +2,10 @@ import React from 'react';
 import { View, Text, StyleSheet, Dimensions, TouchableWithoutFeedback } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 import color from '../misc/color'
+import * as Animatable from 'react-native-animatable'
 
 const getThumbnailText = (filename) => filename[0];
-
+ 
 const convertTime = minutes => { 
     if (minutes) {
     const hrs = minutes / 60;
@@ -27,9 +28,10 @@ const convertTime = minutes => {
 }
 const renderPlayPauseIcon = isPlaying => {
     if(isPlaying) 
-    return(<Entypo name="controller-paus" size={24} color={color.ACTIVE_FONT} />) ;
+    return( <Entypo name="controller-paus" size={24} color={color.ACTIVE_FONT} />) ;
     return <Entypo name="controller-play" size={24} color={color.ACTIVE_FONT} />
 }
+
 
 
 const AudioListItem = ({title, duration,onOptionPress,onAudioPress, isPlaying, activeListItem}) => {
@@ -39,10 +41,11 @@ const AudioListItem = ({title, duration,onOptionPress,onAudioPress, isPlaying, a
             <TouchableWithoutFeedback onPress={onAudioPress}>         
             <View style={styles.leftContainer}>
                 <View style={[styles.thumbnail, {backgroundColor: activeListItem ? color.ACTIVE_BG: color.FONT_LIGHT}]}>
+                <Animatable.Text animation={isPlaying ? "pulse" : ""} easing="ease-out" iterationCount="infinite">
                     <Text style={styles.thumbnailText}>
-                        {activeListItem ? renderPlayPauseIcon(isPlaying): getThumbnailText(title)}
-                       
+                        {activeListItem ? renderPlayPauseIcon(isPlaying): getThumbnailText(title)} 
                     </Text>
+                </Animatable.Text>
                 </View>
                 <View style={styles.titleContainer}>
                     <Text numberOfLines={1} style={styles.title}>
@@ -51,13 +54,14 @@ const AudioListItem = ({title, duration,onOptionPress,onAudioPress, isPlaying, a
                     <Text style={styles.timeText}>
                         {convertTime(duration)}
                     </Text>
+           
                 </View>
             </View>
             </TouchableWithoutFeedback>
             <View style={styles.rightContainer}>
                 <Entypo onPress={onOptionPress}
                     name="dots-three-vertical" 
-                    size={24} color={color.FONT_MEDIUM}
+                    size={20} color={color.FONT_MEDIUM}
                     style={{padding:10}} 
                 />
             </View>
@@ -73,7 +77,7 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         alignSelf:'center',
-        width: width - 80,
+        width: width -30,
     },
     leftContainer:{
         flexDirection:'row',
